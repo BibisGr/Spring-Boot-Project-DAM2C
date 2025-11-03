@@ -14,23 +14,18 @@ import java.util.Optional;
 public class DireccionService {
     @Autowired
     private DireccionRepository direccionRepository;
-    public Optional<Direccion> getByNumero(String numero){
-        return direccionRepository.findByNumero(numero);
-    }
-    public boolean existsByNumero(String numero){
-        return direccionRepository.existsByNumero(numero);
-    }
-    public Optional<Direccion> getByCalle(String calle){
-        return direccionRepository.findByCalle(calle);
-    }
-    public boolean existsByCalle(String calle){
-        return direccionRepository.existsByCalle(calle);
-    }
     public List<Direccion> list(){
         return  direccionRepository.findAll();
     }
-    public Optional<Direccion> getById(Long id){
+    public Optional<Direccion> getById(Long id)
+    {
         return direccionRepository.findById(id);
+    }
+    public Optional<Direccion> getByNumero(String numero){
+        return direccionRepository.findByNumero(numero);
+    }
+    public Optional<Direccion> getByCalle(String calle){
+        return direccionRepository.findByCalle(calle);
     }
     public void  save(Direccion direccion){
         direccionRepository.save(direccion);
@@ -38,4 +33,13 @@ public class DireccionService {
     public  void  delete(long id){
         direccionRepository.deleteById(id);
     }
+    public boolean existsByNumero(String numero){
+        return direccionRepository.existsByNumero(numero);
+    }
+    public boolean existsByCalle(String calle){
+        return direccionRepository.existsByCalle(calle);
+    }
+
+
+
 }

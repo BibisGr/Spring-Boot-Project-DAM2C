@@ -2,6 +2,7 @@ package progresa.relacionalclase.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+
 public class Direccion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,8 +31,9 @@ public class Direccion {
     @OneToOne(mappedBy = "direccion")
     private Restaurante restaurante;
 
-    public Direccion(String calle, String numero) {
+    public Direccion(String calle, String numero, String codigoPostal) {
         this.calle = calle;
         this.numero = numero;
+        this.codigoPostal = codigoPostal;
     }
 }

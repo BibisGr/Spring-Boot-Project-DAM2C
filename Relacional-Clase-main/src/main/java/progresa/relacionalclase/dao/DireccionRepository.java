@@ -9,6 +9,7 @@ import java.util.Optional;
 @RepositoryRestResource
 public interface DireccionRepository
 extends JpaRepository<Direccion, Long> {
+
     Optional<Direccion> findByCalle(String calle);
     boolean existsByCalle(String calle);
 

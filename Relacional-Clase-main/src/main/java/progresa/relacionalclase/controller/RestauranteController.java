@@ -61,18 +61,18 @@ public class RestauranteController {
 
         Direccion direccion = new Direccion();
         //controlar que la calle no sea vac'ia
-        if (StringUtils.isBlank(restauranteDto.getDireccionDto().getCalle()))
+        if (StringUtils.isBlank(restauranteDto.getDireccion().getCalle()))
             return new ResponseEntity<>(
                     new Mensaje("la calle no puede estar vacia."),
                     HttpStatus.BAD_REQUEST);
-        direccion.setCalle(restauranteDto.getDireccionDto().getCalle());
-        if (StringUtils.isBlank(restauranteDto.getDireccionDto().getNumero()))
+        direccion.setCalle(restauranteDto.getDireccion().getCalle());
+        if (StringUtils.isBlank(restauranteDto.getDireccion().getNumero()))
             return new ResponseEntity<>(
                     new Mensaje("el numero no puede estar vacio."),
                     HttpStatus.BAD_REQUEST);
 
-        direccion.setNumero(restauranteDto.getDireccionDto().getNumero());
-        direccion.setCalle(restauranteDto.getDireccionDto().getCalle());
+        direccion.setNumero(restauranteDto.getDireccion().getNumero());
+        direccion.setCalle(restauranteDto.getDireccion().getCalle());
         direccion.setRestaurante(restaurante);
         restaurante.setDireccion(direccion);
 
@@ -89,41 +89,34 @@ public class RestauranteController {
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<?> update(
-            @PathVariable("id") long id,
-            @RequestBody RestauranteDTO restauranteDTO){
-        if (StringUtils.isBlank(restauranteDTO.getNombre()))
-            return new ResponseEntity<>(new Mensaje("el " +
-                    "nombre es obligatorio"),
-                    HttpStatus.BAD_REQUEST);
-        if (restauranteService.existsByNombre(
-                restauranteDTO.getNombre()) &&
-                restauranteService.getByNombre(restauranteDTO.
-                                getNombre()).get().getId() != id)
-            return new ResponseEntity<>(new Mensaje("" +
-                    "el nombre YA EXISTE"), HttpStatus.BAD_REQUEST);
-        Restaurante restaurante = new Restaurante();
-        restaurante.setNombre(restauranteDTO.getNombre());
+        public ResponseEntity<?> update(
+        @PathVariable("id") long id,
+        @RequestBody RestauranteDTO restauranteDto) {
+            if(!restauranteService.existsById(id))
+                return new ResponseEntity(new Mensaje("el restaurante no existe"),
+                        HttpStatus.NOT_FOUND);
+            if (restauranteService.existsByNombre( restauranteDto.getNombre()) && restauranteService.getByNombre(restauranteDto.getNombre()).get().getId() != id)
+                return new ResponseEntity(new Mensaje("el nombre YA EXISTE"), HttpStatus.BAD_REQUEST);
+            if(StringUtils.isBlank(restauranteDto.getDireccion().getCalle()))
+                return new ResponseEntity<>(new Mensaje("el nombre es obligatrio"),  HttpStatus.BAD_REQUEST);
+            Restaurante restaurante = restauranteService.getOne(id).get();
+            restaurante.setNombre(restauranteDto.getNombre());
 
-        Direccion direccion = new Direccion();
-        //controlar que la calle no sea vac'ia
-        if (StringUtils.isBlank(restauranteDTO.getDireccionDto().getCalle()))
-            return new ResponseEntity<>(
-                    new Mensaje("la calle no puede estar vacia."),
-                    HttpStatus.BAD_REQUEST);
-        direccion.setCalle(restauranteDTO.getDireccionDto().getCalle());
-        if (StringUtils.isBlank(restauranteDTO.getDireccionDto().getNumero()))
-            return new ResponseEntity<>(
-                    new Mensaje("el numero no puede estar vacio."),
-                    HttpStatus.BAD_REQUEST);
+            //Control de Direccion
+            //controlar que la calle no sea vac'ia
+            if (StringUtils.isBlank(restauranteDto.getDireccion().getCalle()))
+                return new ResponseEntity<>(
+                        new Mensaje("la calle no puede estar vacia."),
+                        HttpStatus.BAD_REQUEST);
+            restaurante.getDireccion().setCalle(restauranteDto.getDireccion().getCalle());
+            if (StringUtils.isBlank(restauranteDto.getDireccion().getNumero()))
+                return new ResponseEntity<>(
+                        new Mensaje("el numero no puede estar vacio."),
+                        HttpStatus.BAD_REQUEST);
+            restaurante.getDireccion().setNumero(restauranteDto.getDireccion().getNumero());
 
-        direccion.setNumero(restauranteDTO.getDireccionDto().getNumero());
-        direccion.setCalle(restauranteDTO.getDireccionDto().getCalle());
-        direccion.setRestaurante(restaurante);
-        restaurante.setDireccion(direccion);
-
-        restauranteService.save(restaurante);
-        return new ResponseEntity<>(new Mensaje("restaurante creado"), HttpStatus.OK);
+            restauranteService.save(restaurante);
+        return new ResponseEntity<>(new Mensaje("restaurante actualizado"), HttpStatus.OK);
 
     }
 
