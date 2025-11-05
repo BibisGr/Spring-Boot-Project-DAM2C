@@ -25,16 +25,16 @@ public class Restaurante {
     private  String nombre;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JsonManagedReference //esto lo agregue
     @JoinColumn(name="id_direccion") //clave ajena
 //    @PrimaryKeyJoinColumn
     private Direccion direccion;
 
-
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurante")
     @JsonManagedReference
     private Set<ListadoImgs> imagenes;
 
 //    @ManyToOne
 //    @JoinColumn(name="categoria_id", nullable = false)
-//    private categoria categoria;
+//    private Categoria categoria;
 }

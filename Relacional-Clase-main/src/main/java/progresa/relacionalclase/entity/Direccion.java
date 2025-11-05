@@ -1,5 +1,6 @@
 package progresa.relacionalclase.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,8 @@ public class Direccion {
     @Column
     private String codigoPostal;
 
-    @JsonIgnore
+//    @JsonIgnore => este se comenta
+    @JsonBackReference //esto no lo habia agregado
     @OneToOne(mappedBy = "direccion")
     private Restaurante restaurante;
 

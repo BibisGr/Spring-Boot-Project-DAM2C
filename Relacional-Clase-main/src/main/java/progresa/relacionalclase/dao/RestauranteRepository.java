@@ -5,6 +5,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import progresa.relacionalclase.entity.Restaurante;
 
 import java.util.Optional;
+
 @RepositoryRestResource
 public interface RestauranteRepository
         extends JpaRepository<Restaurante, Long> {

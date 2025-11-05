@@ -16,5 +16,6 @@ public class RestauranteDTO {
     @NotBlank
     private String nombre;
     private DireccionDto direccion;
-    private Set<ListadoImagenesDTO> listadoImagenes;
+    private Set<ListadoImagenesDTO> imagenes;
+    private String categoria;
 }

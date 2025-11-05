@@ -23,22 +23,18 @@ public class RestauranteService {
     public Optional<Restaurante> getOne(long id){
         return  resturanteRepositorio.findById(id);
     }
-
     public Optional<Restaurante> getByNombre(String nombre){
         return  resturanteRepositorio.findByNombre(nombre);
     }
-
     public void save (Restaurante restaurante){
         resturanteRepositorio.save(restaurante);
     }
     public void delete (long id){
         resturanteRepositorio.deleteById(id);
     }
-
     public boolean existsById (long id){
         return resturanteRepositorio.existsById(id);
     }
-
     public boolean existsByNombre (String nombre){
         return resturanteRepositorio.existsByNombre(nombre);
     }
